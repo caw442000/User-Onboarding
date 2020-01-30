@@ -17,15 +17,18 @@ const UserForm = ({values, errors, touched, status}) => {
       <Form>
         <label htmlFor= "name">Name:</label>
         <Field id="name" type="text" name="name" />
+        {touched.name && errors.name && (
+          <p>{errors.name}</p>
+        )}
         <label htmlFor= "email">Email:</label>
         <Field id="email" type="email" name="email" />
         {touched.email && errors.email && (
-          <p className="errors">{errors.email}</p>
+          <p>{errors.email}</p>
         )}
         <label htmlFor= "password">Password:</label>
         <Field id="password" type="password" name="password" />
         {touched.password && errors.password && (
-          <p className="errors">{errors.password}</p>
+          <p >{errors.password}</p>
         )}
         <label >
           Terms of Service
@@ -34,11 +37,12 @@ const UserForm = ({values, errors, touched, status}) => {
             name="termsOfService"
             checked={values.termsOfService}
           />
-          {touched.termsOfService && errors.termsOfService && (
-          <p className="errors">{errors.termsOfService}</p>
-        )}
-          <span className="checkmark" />
+     
+          <span/>
         </label>
+        {touched.termsOfService && errors.termsOfService && (
+          <p >{errors.termsOfService}</p>
+        )}
         <button>Submit</button>
 
       </Form>
@@ -68,10 +72,22 @@ const FormikUserForm = withFormik({
 
   },
   validationSchema: Yup.object().shape({
-    name: Yup.string().required(),
-    email: Yup.string().email().required(),
-    password: Yup.string().required()
+    name: Yup.string().required("Your Name is required to continue"),
+    email: Yup.string().email().required("Need an email to find you"),
+    password: Yup.string().required("Password or go away"),
+    termsOfService: Yup.boolean(true)
 
   }),
+  handleSubmit(values, { setStatus, resetForm }) {
+    console.log("submitting! ", values);
+    axios
+      .post("https://reqres.in/api/users/", values)
+      .then(res => {
+        console.log("success", res);
+        setStatus(res.data); 
+        resetForm();
+      })
+      .catch(err => console.log(err.response));
+  }
 })(UserForm);
 export default FormikUserForm;
