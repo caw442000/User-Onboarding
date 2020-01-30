@@ -10,20 +10,34 @@ const UserForm = ({values}) => {
       <Form>
         <label htmlFor= "name">Name:</label>
         <Field id="name" type="text" name="name" />
-
-
-
+        <label htmlFor= "email">Email:</label>
+        <Field id="email" type="email" name="email" />
+        <label htmlFor= "password">Password:</label>
+        <Field id="password" type="password" name="password" />
+        <label >
+          Terms of Service
+          <Field
+            type="checkbox"
+            name="tos"
+            checked={values.termsOfService}
+          />
+          <span className="checkmark" />
+        </label>
+        <button>Submit</button>
 
       </Form>
-     
+
     </div>
   );
 };
 const FormikUserForm = withFormik({
-  mapPropsToValues({name}) {
+  mapPropsToValues({name, email, password, termsOfService}) {
 
   return {
-    name:""
+    name:"",
+    email: "",
+    password:"",
+    termsOfService
   };
 
   },
