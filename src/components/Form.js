@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import Users from "./Users"
 
 
 const UserForm = ({values, errors, touched, status}) => {
@@ -46,17 +47,8 @@ const UserForm = ({values, errors, touched, status}) => {
         <button>Submit</button>
 
       </Form>
-      {users.map (user =>(
-        <ul key={user.id}>
-          <li>Name: {user.name}</li>
-          <li>Email: {user.email}</li>
-          <li>Password: {user.password}</li>
-        </ul>
-
-
-
-
-      ))}
+      <Users users = {users}/>
+ 
     </div>
   );
 };
