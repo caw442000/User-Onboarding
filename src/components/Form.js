@@ -1,11 +1,31 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {withFormik, Form, Field } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
-const Form = prop => {
+
+const UserForm = ({values}) => {
   return (
     <div>
-      <p>Stuff</p>
+      <Form>
+        <label htmlFor= "name">Name:</label>
+        <Field id="name" type="text" name="name" />
+
+
+
+
+      </Form>
+     
     </div>
   );
 };
+const FormikUserForm = withFormik({
+  mapPropsToValues({name}) {
 
-export default Form;
+  return {
+    name:""
+  };
+
+  },
+})(UserForm);
+export default FormikUserForm;
